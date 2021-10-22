@@ -14,6 +14,7 @@ use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use App\Models\PasarKategori;
+use App\Models\PedagangAlamat;
 
 class PasarController extends Controller
 {
@@ -66,6 +67,21 @@ class PasarController extends Controller
                 $jumlah_lapak = PasarKategori::where('tm_pasar_id', $p->id)->count();
 
                 return $jumlah_lapak;
+            })
+            ->editColumn('jumlah_pedagang', function ($p) {
+                $jumlah_pedagang = PedagangAlamat::join('tm_pasar_kategoris', 'tm_pasar_kategoris.id', '=', 'tm_pedagang_alamats.tm_pasar_kategori_id')
+                    ->where('tm_pasar_kategoris.tm_pasar_id', $p->id)
+                    ->count();
+
+                return $jumlah_pedagang;
+            })
+            ->editColumn('terpakai', function ($p) {
+                $terpakai = PedagangAlamat::join('tm_pasar_kategoris', 'tm_pasar_kategoris.id', '=', 'tm_pedagang_alamats.tm_pasar_kategori_id')
+                    ->where('tm_pasar_kategoris.tm_pasar_id', $p->id)
+                    ->where('status', 1)
+                    ->count();
+
+                return $terpakai;
             })
             ->addIndexColumn()
             ->rawColumns(['action', 'nm_pasar'])

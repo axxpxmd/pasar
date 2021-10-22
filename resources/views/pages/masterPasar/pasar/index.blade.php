@@ -130,8 +130,8 @@
             {data: 'kd_pasar', name: 'kd_pasar'},
             {data: 'luas_area', name: 'luas_area'},
             {data: 'jumlah_lapak', name: 'jumlah_lapak', className: 'text-center'},
-            {data: 'jumlah_pedagang', name: 'jumlah_pedagang'},
-            {data: 'terpakai', name: 'terpakai'},
+            {data: 'jumlah_pedagang', name: 'jumlah_pedagang', className: 'text-center'},
+            {data: 'terpakai', name: 'terpakai', className: 'text-center'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
         ]
     });
