@@ -43,6 +43,10 @@
                                         <label class="col-md-3 s-12">{{ $pedagang->no_telp }}</label>
                                     </div>
                                     <div class="row">
+                                        <label class="col-md-2 text-right s-12"><strong>Email :</strong></label>
+                                        <label class="col-md-3 s-12">{{ $pedagang->email }}</label>
+                                    </div>
+                                    <div class="row">
                                         <label class="col-md-2 text-right s-12"><strong>No KTP :</strong></label>
                                         <label class="col-md-3 s-12">{{ $pedagang->no_ktp }}</label>
                                     </div>
