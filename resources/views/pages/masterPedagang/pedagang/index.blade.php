@@ -54,20 +54,24 @@
                                         <input type="text" name="no_telp" id="no_telp" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off" required/>
                                     </div>
                                     <div class="form-group m-0">
+                                        <label for="email" class="col-form-label s-12 col-md-4">Email</label>
+                                        <input type="text" name="email" id="email" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off" required/>
+                                    </div>
+                                    <div class="form-group m-0">
                                         <label for="no_ktp" class="col-form-label s-12 col-md-4">No KTP</label>
                                         <input type="number" name="no_ktp" id="no_ktp" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off" required/>
                                     </div>
                                     <div class="form-group m-0">
                                         <label for="ktp" class="col-form-label s-12 col-md-4">Foto KTP</label>
-                                        <input type="file" name="ktp" id="ktp" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off" required/>
+                                        <input type="file" name="ktp" id="ktp" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off"/>
                                     </div>
                                     <div class="form-group m-0">
                                         <label for="kk" class="col-form-label s-12 col-md-4">KK</label>
-                                        <input type="file" name="kk" id="kk" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off" required/>
+                                        <input type="file" name="kk" id="kk" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off"/>
                                     </div>
                                     <div class="form-group m-0">
                                         <label for="shgp" class="col-form-label s-12 col-md-4">SHGP</label>
-                                        <input type="file" name="shgp" id="shgp" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off" required/>
+                                        <input type="file" name="shgp" id="shgp" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off"/>
                                     </div>
                                     <div class="form-group m-0">
                                         <label for="" class="col-form-label s-12 col-md-4">Foto Pedagang </label>
@@ -238,11 +242,14 @@
             $('#id').val(data.id);
             $('#nm_pedagang').val(data.nm_pedagang).focus();
             $('#no_telp').val(data.no_telp);
+            $('#email').val(data.email);
             $('#no_ktp').val(data.no_ktp);
             $('#alamat_pedagang').val(data.alamat_pedagang);
+
             var path = "https://dataawan.tangerangselatankota.go.id/pasar/pedagang/"+data.foto;
             $('#preview').attr({'src': path, 'class': 'img-fluid', 'style': 'margin-left: 50%; margin-top: -5px !important; margin-bottom: 15px !important'});
             $('#changeText').html('Change Image')
+
         }, "JSON").fail(function(){
             reload();
         });

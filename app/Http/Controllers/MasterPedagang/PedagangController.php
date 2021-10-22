@@ -50,6 +50,7 @@ class PedagangController extends Controller
         $request->validate([
             'no_telp' => 'required',
             'no_ktp'  => 'required|min:16|unique:tm_pedagangs,no_ktp',
+            'email'   => 'required',
             'nm_pedagang'     => 'required',
             'alamat_pedagang' => 'required',
             'ktp'  => 'required|mimes:png,jpg,jpeg,pdf|max:1024',
@@ -89,6 +90,7 @@ class PedagangController extends Controller
         $pedagang->kk = $file_name_kk;
         $pedagang->shgp = $file_name_shgp;
         $pedagang->foto = $file_name_foto;
+        $pedagang->email = $request->email;
         $pedagang->save();
 
         return response()->json([
@@ -125,19 +127,24 @@ class PedagangController extends Controller
             'alamat_pedagang' => 'required',
             'no_ktp'  => 'required|min:16|unique:tm_pedagangs,no_ktp,' . $id,
             'no_telp' => 'required',
-            'ktp'  => 'required|mimes:png,jpg,jpeg,pdf|max:1024',
-            'kk'   => 'required|mimes:png,jpg,jpeg,pdf|max:1024',
-            'shgp' => 'required|mimes:png,jpg,jpeg,pdf|max:1024',
-            'foto' => 'required|mimes:png,jpg,jpeg|max:1024'
+            // 'ktp'  => 'required|mimes:png,jpg,jpeg,pdf|max:1024',
+            // 'kk'   => 'required|mimes:png,jpg,jpeg,pdf|max:1024',
+            // 'shgp' => 'required|mimes:png,jpg,jpeg,pdf|max:1024',
+            // 'foto' => 'required|mimes:png,jpg,jpeg|max:1024',
+            'email' => 'required',
         ]);
 
-        $path_sftp   = 'pedagang/';
+        $path_sftp = 'pedagang/';
 
         // ktp
         if ($request->ktp != null) {
             $ktp = $request->file('ktp');
             $file_name_ktp = time() . "." . $ktp->getClientOriginalName();
             $ktp->storeAs($path_sftp, $file_name_ktp, 'sftp', 'public');
+
+            $request->validate([
+                'ktp'  => 'required|mimes:png,jpg,jpeg,pdf|max:1024',
+            ]);
 
             Storage::disk('sftp')->delete($path_sftp . $pedagang->ktp);
         } else {
@@ -150,6 +157,10 @@ class PedagangController extends Controller
             $file_name_kk = time() . "." . $kk->getClientOriginalName();
             $kk->storeAs($path_sftp, $file_name_kk, 'sftp', 'public');
 
+            $request->validate([
+                'kk'   => 'required|mimes:png,jpg,jpeg,pdf|max:1024',
+            ]);
+
             Storage::disk('sftp')->delete($path_sftp . $pedagang->kk);
         } else {
             $file_name_kk = $pedagang->kk;
@@ -161,16 +172,24 @@ class PedagangController extends Controller
             $file_name_shgp = time() . "." . $shgp->getClientOriginalName();
             $shgp->storeAs($path_sftp, $file_name_shgp, 'sftp', 'public');
 
+            $request->validate([
+                'shgp' => 'required|mimes:png,jpg,jpeg,pdf|max:1024'
+            ]);
+
             Storage::disk('sftp')->delete($path_sftp . $pedagang->shgp);
         } else {
             $file_name_shgp = $pedagang->shgp;
         }
 
-        // ktp
+        // foto
         if ($request->foto != null) {
             $foto = $request->file('foto');
             $file_name_foto = time() . "." . $foto->getClientOriginalName();
             $foto->storeAs($path_sftp, $file_name_foto, 'sftp', 'public');
+
+            $request->validate([
+                'foto' => 'required|mimes:png,jpg,jpeg|max:1024',
+            ]);
 
             Storage::disk('sftp')->delete($path_sftp . $pedagang->foto);
         } else {
@@ -185,7 +204,8 @@ class PedagangController extends Controller
             'ktp'  => $file_name_ktp,
             'kk'   => $file_name_kk,
             'shgp' => $file_name_shgp,
-            'foto' => $file_name_foto
+            'foto' => $file_name_foto,
+            'email' => $request->email
         ]);
 
         return response()->json([
